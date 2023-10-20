@@ -1,0 +1,29 @@
+﻿@using Dominio;
+
+@{
+    ViewData["Title"] = "MostrarDatosUsuario";
+}
+
+<h1>MIS DATOS</h1>
+
+@if(Context.Session.GetString("rol") == "huesped")
+{
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-primary">Email: @ViewBag.Usuario.Email</li>
+        <li class="list-group-item list-group-item-secondary">Nombre: @ViewBag.Usuario.NombreYApellido</li>
+        <li class="list-group-item list-group-item-success">Documento:  @ViewBag.Usuario.TipoYNumeroDocumento</li>
+        <li class="list-group-item list-group-item-danger">Habitacion: @ViewBag.Usuario.Habitacion</li>
+        <li class="list-group-item list-group-item-warning">Nivel de Fidelizacion: @ViewBag.Usuario.NivelDeFidelizacion</li>
+    </ul>
+
+}
+else if (Context.Session.GetString("rol") == "administrador")
+{
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-primary">Email: @ViewBag.Usuario.Email</li>
+        <li class="list-group-item list-group-item-secondary">Nombre: @ViewBag.Usuario.NombreYApellido</li>
+        <li class="list-group-item list-group-item-success">Fecha de inicio: @ViewBag.Usuario.FechaInicio</li>
+    </ul>
+}
+
+

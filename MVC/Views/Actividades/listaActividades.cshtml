@@ -1,0 +1,106 @@
+﻿@using Dominio;
+@{
+    ViewData["Title"] = "listaActividades";
+}
+
+<h1>Actividades</h1>
+
+<form class="row row-cols-lg-auto g-3 align-items-center" action="~/Actividades/listaFiltradaPorFecha" method="post">
+    <div class="col-12">
+        <input type="date" class="form-control" id="idFecha" name="fecha">
+    </div>
+    <div class="col-12">
+        <button class="btn btn-secondary" type="submit">Filtrar</button>
+    </div>
+    <div class="col-12">
+        <a class="btn btn-dark" href="~/Actividades/listaActividades">Reiniciar lista</a>
+    </div>
+</form>
+
+@if(TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+<br />
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+<br />
+
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    NOMBRE
+                </th>
+                <th>
+                    FECHA
+                </th>
+                <th>
+                    EDAD MINIMA
+                </th>
+                <th>
+                    COSTO
+                </th>
+                <th>
+                   
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Actividad a in ViewBag.Actividades)
+            {
+                <tr>
+                    <td>
+                        @a.Nombre
+                    </td>
+                    <td>
+                        @a.Fecha.ToShortDateString()
+                    </td>
+                    <td>
+                        @a.EdadMinima AÑOS
+                    </td>
+                    @if (a.Costo != 0)
+                    {
+                        <td>
+                            U$S @a.Costo 
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            Actividad gratuita
+                        </td>
+                    }
+                    <td>
+                        @if (a.Fecha >= DateTime.Today)
+                        {
+                            
+                            @if (Context.Session.GetString("rol") == null)
+                            {
+                                <a class="btn btn-secondary" href="~/Usuarios/Login">AGENDAR</a>
+                            }
+                            else
+                            {
+                                if (Context.Session.GetString("rol") == "huesped")
+                                {
+
+                                    <a class="btn btn-secondary" href="~/Agendas/CrearAgenda?idAct=@a.Id">AGENDAR</a>
+                                }
+
+                            }
+
+
+
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>

@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewData["Title"] = "listaProveedores";
+}
+
+@using Dominio;
+
+<h1>Proveedores</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Telefono
+            </th>
+            <th>
+                Direccion
+            </th>
+            <th>
+                Descuento
+            </th>
+            <th>
+                Modificar descuento
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Proveedor p in ViewBag.Proveedores)
+        {
+            <tr>
+                <td>
+                    @p.Nombre
+                </td>
+                <td>
+                    @p.Telefono
+                </td>
+                <td>
+                    @p.Direccion
+                </td>
+                <td>
+                    @p.Descuento%
+                </td>
+                <td>
+                    <a class="btn btn-secondary" href="~/Proveedores/ObtenerProveedor?nombre=@p.Nombre">Modificar</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

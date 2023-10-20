@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    body {
+        background-image: url("img/hostal.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .text-center {
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 20px;
+        margin-top: 20%;
+    }
+
+    .footer {
+        background-image: none;
+    }
+</style>
+
+<div class="text-center">
+    <h1 class="display-4">Bienvenido</h1>
+    @if (Context.Session.GetString("email") != null)
+    {
+        <p class="small-text">Correo: @Context.Session.GetString("email")</p>
+    }
+</div>

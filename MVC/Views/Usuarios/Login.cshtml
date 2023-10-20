@@ -1,0 +1,122 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+@using Dominio;
+
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+    }
+
+    .card {
+        width: 320px;
+        margin: 70px auto;
+        background-color: #fff;
+        border-radius: 6px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: white;
+        color: black;
+        padding: 20px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+<div class="card" style="width: 20rem; margin: 70px auto;">
+    <div class="card-header">
+        <img src="~/img/userfoto.png" alt="User Image" style="width: 100px; height: 100px; margin: 0 auto; display: block;">
+        <h3>Login</h3>
+    </div>
+    <div class="card-body">
+        <form action="~/Usuarios/procesarlogin" method="post">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" name="usuario" id="txtUsuario" class="form-control" />
+                <div class="text-danger" id="errorUsuario"></div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="pass" id="txtPass" class="form-control" />
+                <div class="text-danger" id="errorPass"></div>
+            </div>
+            <br />
+            <input type="submit" value="Login" class="btn btn-secondary" onclick="return ValidarLogin()" />
+        </form>
+
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    function ValidarLogin() {
+        let retorno = true;
+
+
+        let usuario = document.querySelector("#txtUsuario").value;
+        let pass = document.querySelector("#txtPass").value;
+
+        let usuarioError = document.querySelector("#errorUsuario");
+        let passError = document.querySelector("#errorPass");
+
+        usuarioError.innerHTML = "";
+        passError.innerHTML = "";
+
+        if (usuario === null || usuario === "") {
+            retorno = false;
+            usuarioError.innerHTML = "El email no puede estar vacio";
+            //alert("el usuario es vacio")
+        }
+
+        if (pass === null || pass === "") {
+            retorno = false;
+            passError.innerHTML = "La contraseña no puede esta vacia";
+            //alert("la pass es vacia")
+        }
+
+        return retorno;
+    }
+
+
+
+</script>

@@ -1,0 +1,65 @@
+﻿@using Dominio;
+@{
+    ViewData["Title"] = "AltaHuesped";
+}
+
+<h1>REGISTRO HUESPED</h1>
+
+
+<br />
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+@if (ViewBag.Exito != null)
+{
+    <div class="alert alert-success">@ViewBag.Exito</div>
+}
+
+<br />
+
+
+<form action="~/Usuarios/registroHuesped" method="post">
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email" name="dirEmail" placeholder="Email" required>
+    </div>
+    <div class="form-group">
+        <label for="Password">Contraseña</label>
+        <input type="password" class="form-control" id="password" name="pass" placeholder="Password" required>
+    </div>
+    <div class="form-group">
+        <label for="TipoDocumento">Tipo de Documento</label>
+        <select class="form-control" id="tipoDeDocumento" name="tipo" required>
+            <option value=1>Cedula</option>
+            <option value=2>Pasaporte</option>
+            <option value=3>Otros</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="numeroDocumento">Número de Documento</label>
+        <input type="text" class="form-control" id="numeroDocumento" name="numDoc" placeholder="Numero documento" required>
+    </div>
+    <div class="form-group">
+        <label for="nombreHuesped">Nombre</label>
+        <input type="text" class="form-control" id="nombreHuesped" name="nombre" placeholder="Nombre" required>
+    </div>
+    <div class="form-group">
+        <label for="apellidoHuesped">Apellido</label>
+        <input type="text" class="form-control" id="apellidoHuesped" name="apellido" placeholder="Apellido" required>
+    </div>
+    <div class="form-group">
+        <label for="NumeroHabitacion">Número de Habitacion</label>
+        <input type="text" class="form-control" id="NumeroHabitacion" name="numHabitacion" placeholder="Numero Habitación" required>
+    </div>
+        <div class="col-12">
+        <label for="idFechaNacHuesped">Fecha de Nacimiento</label>
+        <input type="date" class="form-control" id="idFechaNacHuesped" name="fechaNacHuesped">
+    </div>
+    <br />
+    <input type="submit" class="btn btn-secondary" value="Registrarse" />
+</form>
+

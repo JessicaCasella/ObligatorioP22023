@@ -1,0 +1,198 @@
+﻿@{
+    ViewData["Title"] = "listadoDeMisAgendas";
+}
+
+
+@using Dominio;
+
+
+
+@if (Context.Session.GetString("rol") == "administrador")
+{
+    if (ViewBag.PermitoPorFecha == true)
+    {
+        <h1>Buscar por fecha</h1>
+
+        <form class="row row-cols-lg-auto g-3 align-items-center" action="~/Agendas/FiltrarAgendasPorFecha" method="post">
+
+            <div class="col-12">
+                <input type="date" class="form-control" id="dateAgenda" name="fecha">
+            </div>
+
+
+            <div class="col-12">
+                <button class="btn btn-secondary" type="submit">Buscar</button>
+            </div>
+
+
+        </form>
+
+
+    }
+    else
+    {
+
+        <h1>Agendas de huesped</h1>
+
+        <form class="row row-cols-lg-auto g-3 align-items-center" action="~/Agendas/AgendasDeUnSoloHuesped" method="post">
+
+            <div class="col-12">
+                <input type="text" class="form-control" id="numDocumento" name="numero" placeholder="Num documento" required>
+            </div>
+            <select class="form-control" id="slcDoc" name="tipoDoc">
+                <option value=1>CI</option>
+                <option value=2>PASAPORTE</option>
+                <option value=3>OTRO</option>
+            </select>
+
+            <div class="col-12">
+                <button class="btn btn-secondary" type="submit">Buscar</button>
+            </div>
+
+
+        </form>
+
+    }
+
+
+}
+else
+{
+    <h1>Mis Agendas</h1>
+}
+
+
+<br />
+@if (ViewBag.Exito != null)
+{
+    <div class="alert alert-success">@ViewBag.Exito</div>
+}
+<br />
+
+
+@if (ViewBag.Agendas == null || ViewBag.Agendas.Count == 0)
+{
+    <p class="alert alert-danger">
+        @ViewBag.Error
+    </p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    NOMBRE
+                </th>
+                <th>
+                    ACTIVIDAD
+                </th>
+                <th>
+                    FECHA
+                </th>
+                <th>
+                    COSTO
+                </th>
+                <th>
+                    ESTADO
+                </th>
+                <th>
+                    LUGAR
+                </th>
+                <th>
+                    PROVEEDOR
+                </th>
+                @if (Context.Session.GetString("rol") != null && Context.Session.GetString("rol") == "administrador")
+                {
+                    <th>
+                        CONFIRMAR AGENDA
+                    </th>
+                }
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Agenda a in ViewBag.Agendas)
+            {
+                <tr>
+                    <td>
+                        @a.Huesped.NombreYApellido
+                    </td>
+                    <td>
+                        @a.Actividad.Nombre
+                    </td>
+                    <td>
+                        @a.Actividad.Fecha.ToShortDateString()
+                    </td>
+
+                    @if (a.CostoFinal != 0)
+                    {
+                        <td>
+                            U$S @a.CostoFinal
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            Actividad gratuita
+                        </td>
+                    }
+                    <td>
+                        @a.EstadoDeLaAgenda
+                    </td>
+
+                    @if (a.Actividad is ActividadDelHostal)
+                    {
+
+                        ActividadDelHostal A = a.Actividad as ActividadDelHostal;
+                        <td>
+                            @A.LugarDelHostal
+                        </td>
+                        <td>
+                            -
+                        </td>
+                    }
+                    else if (a.Actividad is ActividadTercerizada)
+                    {
+
+                        ActividadTercerizada A = a.Actividad as ActividadTercerizada;
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            @A._proveedor.Nombre
+                        </td>
+
+                    }
+
+                    @if (Context.Session.GetString("rol") != null && Context.Session.GetString("rol") == "administrador" && a.EstadoDeLaAgenda != EstadoAgenda.CONFIRMADA)
+                    {
+                        if (ViewBag.PermitoPorFecha == true)
+                        {
+                            <td>
+                                <a class="btn btn-secondary" href="~/Agendas/ConfirmarAgenda2?idAct=@a.Actividad.Id&tipo=@a.Huesped.TipoDocumento&doc=@a.Huesped.NumeroDocumento">CONFIRMAR</a>
+                            </td>
+                        }
+                        else
+                        {
+
+                            <td>
+                                <a class="btn btn-secondary" href="~/Agendas/ConfirmarAgenda?idAct=@a.Actividad.Id&tipo=@a.Huesped.TipoDocumento&doc=@a.Huesped.NumeroDocumento">CONFIRMAR</a>
+                            </td>
+                        }
+
+                    }
+                    @if (Context.Session.GetString("rol") != null && Context.Session.GetString("rol") == "administrador" && a.EstadoDeLaAgenda == EstadoAgenda.CONFIRMADA)
+                    {
+                        <td>
+                            Agenda confirmada
+                        </td>
+
+                    }
+
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}

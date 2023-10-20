@@ -1,0 +1,29 @@
+﻿@using Dominio;
+@{
+    ViewData["Title"] = "CrearAgenda";
+}
+
+
+
+@if (ViewBag.Exito != null)
+{
+    <div id="successAlert" class="alert alert-success alert-dismissible fade show">@ViewBag.Exito</div>
+}
+<script>
+    // Función para ocultar automáticamente el mensaje de éxito después de 3 segundos
+    setTimeout(function () {
+        document.getElementById("successAlert").style.display = "none";
+    }, 1000);
+</script>
+
+
+<h1>DATOS DE LA AGENDA</h1>
+
+<ul class="list-group">
+    <li class="list-group-item list-group-item-primary">Nombre huesped: @ViewBag.NombreHuesped</li>
+    <li class="list-group-item list-group-item-secondary">Nombre actividad:@ViewBag.NombreActividad</li>
+    <li class="list-group-item list-group-item-success">Fecha actividad:  @ViewBag.FechaActividad</li>
+    <li class="list-group-item list-group-item-danger">Costo actividad:  U$S @ViewBag.CostoActividad</li>
+    <li class="list-group-item list-group-item-warning">Estado agenda: @ViewBag.EstadoAgenda</li>
+    <li class="list-group-item list-group-item-primary">Fecha agenda: @ViewBag.fechaAgenda</li>
+</ul>

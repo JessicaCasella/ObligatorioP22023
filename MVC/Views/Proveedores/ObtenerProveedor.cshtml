@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "ObtenerProveedor";
+}
+
+<h3>Descuento</h3>
+<br />
+
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+
+<p> @ViewBag.Proveedor.Nombre</p>
+
+<form class="row row-cols-lg-auto g-3 align-items-center" action="~/Proveedores/CambiarPorcentaje" method="post">
+    <div class="col-12">
+        <input type="number" class="form-control" id="idPorcentaje" name="CantDescuento" value="@ViewBag.Proveedor.Descuento">
+    </div>
+    <input type="text" class="form-control" id="idNombreProveedor" name="nombreProveedor" value="@ViewBag.Proveedor.Nombre" hidden>
+
+    <div class="col-12">
+        <button class="btn btn-secondary" type="submit">APLICAR</button>
+    </div>
+
+</form>
+
